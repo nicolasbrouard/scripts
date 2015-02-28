@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Script for anacron. Needs to be place in /etc/cron.weekly/
+# Backup web sites from Greengeeks every week
+
+pushd /home/nbrouard/Backup/site_web
+sudo -u nbrouard ./backup_all.sh
+popd
