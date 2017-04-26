@@ -1,0 +1,6 @@
+#!/bin/sh
+
+ORIGINS=`git remote`
+for ORIGIN in $ORIGINS; do
+	git remote prune $ORIGIN
+done

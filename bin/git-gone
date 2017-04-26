@@ -1,0 +1,14 @@
+#!/bin/sh
+# Display branches that are not anymore on the server
+# Pass -d or -D to delete this branch
+
+BRANCHES=`git branch -vv | grep ': gone]' | awk '{print $1;}'`
+
+if [ -z $1 ] 
+then
+	echo $BRANCHES
+else
+	for BRANCH in $BRANCHES; do
+		git branch $1 $BRANCH
+	done
+fi
