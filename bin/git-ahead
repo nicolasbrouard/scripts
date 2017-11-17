@@ -2,3 +2,8 @@
 
 git branch -vv | grep ahead
 
+echo
+echo --------------------------
+echo Branches without upstream:
+echo --------------------------
+git branch -vv | cut -c 3- | awk '$3 !~/\[/ { print $1 }'

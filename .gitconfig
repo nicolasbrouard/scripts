@@ -5,6 +5,7 @@
 	editor = vim
 	autocrlf = input
 	attributesfile = ~/.gitattributes
+	excludesfile = ~/.gitignore_global
 [push]
 	default = simple
 [merge]
