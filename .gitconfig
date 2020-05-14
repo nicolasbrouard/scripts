@@ -1,5 +1,5 @@
 [user]
-	email = nicolas.brouard@nuance.com
+	email = nicolas.brouard@cerence.com
 	name = Nicolas Brouard
 [core]
 	editor = vim
@@ -50,6 +50,7 @@
 [merge]
 	tool = kdiff3
 #	tool = p4merge
+#	tool = meld
 [diff "image"]
 	command = ~/bin/git-imgdiff
 [branch]

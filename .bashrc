@@ -16,8 +16,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=100000
-HISTFILESIZE=200000
+HISTSIZE=-1
+HISTFILESIZE=-1
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -91,14 +91,6 @@ fi
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Color support in cat
-alias ccat='pygmentize -g'
-
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -132,7 +124,13 @@ if [ -f ~/bin/gradle-tab-completion.bash ]; then
   . ~/bin/gradle-tab-completion.bash
 fi
 
-PATH=$PATH:~/bin
+# Kubernetes bash completion
+source <(kubectl completion bash)
+
+# Stern bash completion
+source <(/home/nbrouard/bin/stern --completion=bash)
+
+PATH=$PATH:~/bin:~/.local/bin
 
 # Configure colors, if available.
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -173,11 +171,18 @@ git_prompt ()
 # Thy holy prompt.
 PROMPT_COMMAND='PS1="${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}$(git_prompt)\$ "'
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=-1
-HISTFILESIZE=-1
-
+# Kubenertes kubectl configuration files
+KUBECONFIG=$HOME/.kube/config
+KUBECONFIG=$KUBECONFIG:$HOME/projects/ncs/git/mobility-ncs-core-tools/k8s-config/kubeconfig
+KUBECONFIG=$KUBECONFIG:$HOME/projects/ncs/git/mobility-ncs-core-tools/k8s-config-secret/mtdmz1/kubeconfig
+export KUBECONFIG
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/nbrouard/.sdkman"
 [[ -s "/home/nbrouard/.sdkman/bin/sdkman-init.sh" ]] && source "/home/nbrouard/.sdkman/bin/sdkman-init.sh"
+
+# tabtab source for gitbook package
+# uninstall by removing these lines or running `tabtab uninstall gitbook`
+[ -f /opt/node-v0.12.2-linux-x64/lib/node_modules/gitbook-completions/node_modules/tabtab/.completions/gitbook.bash ] && . /opt/node-v0.12.2-linux-x64/lib/node_modules/gitbook-completions/node_modules/tabtab/.completions/gitbook.bash
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
