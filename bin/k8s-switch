@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+CONTEXT=${1}
+NAMESPACE=${2}
+
+kubectl config use-context ${CONTEXT}
+kubectl config set-context ${CONTEXT} --namespace=${NAMESPACE}
+export TILLER_NAMESPACE=${NAMESPACE}

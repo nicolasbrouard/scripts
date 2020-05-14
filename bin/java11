@@ -1,0 +1,11 @@
+#!/bin/sh
+
+#export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/zulu-11-amd64
+export M2_HOME=/home/nbrouard/dev-tools/apache-maven-3.6.0
+
+#sudo update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/bin/java
+
+export PATH=$M2_HOME/bin:$PATH
+
+#export MAVEN_OPTS="-Denforcer.skip"

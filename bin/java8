@@ -1,0 +1,9 @@
+#!/bin/sh
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export M2_HOME=/usr/share/maven
+
+# To fix the issue with the Maven Surefire plugin
+export _JAVA_OPTIONS=-Djdk.net.URLClassPath.disableClassPathURLCheck=true
+
+sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java

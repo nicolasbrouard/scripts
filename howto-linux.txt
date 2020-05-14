@@ -1,0 +1,35 @@
+# Remmina last version to fix copy/paste issue and share drive
+
+sudo apt-add-repository ppa:remmina-ppa-team/remmina-next ; sudo apt-get update ; sudo apt-get install remmina remmina-plugin-rdp
+
+# Samba share CentOS
+
+sudo yum install samba-client samba
+sudo chcon -R -t samba_share_t svc-8084/*
+cat /etc/samba/smb.conf
+[global]
+workgroup = NUANCE
+server string = Samba Server %v
+netbios name = mt-lab-svc02
+security = user
+map to guest = nuance
+dns proxy = no
+
+[svc-8084]
+path = /home/nuance/svc-8084
+browsable = yes
+writable = no
+guest ok = yes
+read only = yes
+
+# Azure VPN connection
+
+sudo openconnect -b --authgroup=MCS-NCS-SSPI --servercert=sha1:42b5b122e1d911047f7e30ab67ace20e5d6c0849  --no-dtls asavip.vpn.mobcc.nuance.com
+sudo openconnect --background --setuid=nbrouard --user=Nicolas.Brouard@mobcc.nuance.com --authgroup=AUTO-CORE-MTL-CI --no-dtls nala1.vpn.mobcc.nuance.com
+
+# Helm chart artifactory repo
+
+helm repo add nuancemobilitygkqa https://artifactory-dmz.dev.nuancemobility.net/artifactory/gkqa-helm --username global-reader --password '' --tiller-namespace gkqa-dev
+
+# SSH keygen
+ssh-keygen -t rsa -b 2048 -C $USER@`hostname -s`-`date "+%Y%m%d"`
