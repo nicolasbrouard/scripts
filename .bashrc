@@ -124,6 +124,8 @@ if [ -f ~/bin/gradle-tab-completion.bash ]; then
   . ~/bin/gradle-tab-completion.bash
 fi
 
+PATH=$PATH:~/bin:/snap/bin
+
 # Kubernetes bash completion
 source <(kubectl completion bash)
 
