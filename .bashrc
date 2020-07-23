@@ -128,6 +128,8 @@ PATH=$PATH:~/bin:/snap/bin
 
 # Kubernetes bash completion
 source <(kubectl completion bash)
+alias k=kubectl
+complete -F __start_kubectl k
 
 # Stern bash completion
 source <(/home/nbrouard/bin/stern --completion=bash)
@@ -170,13 +172,21 @@ git_prompt ()
 # Docker machine bash completion
 #PS1='[\u@\h \W$(__docker_machine_ps1)]\$ '
 
+k8s_prompt ()
+{
+  echo "[$c_path$(kubectx -c)/$(kubens -c)$c_reset]"
+}
+
 # Thy holy prompt.
-PROMPT_COMMAND='PS1="${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}$(git_prompt)\$ "'
+PROMPT_COMMAND='PS1="${c_user}\u${c_reset}@${c_user}\h${c_reset}:${c_path}\w${c_reset}$(git_prompt)$(k8s_prompt)\$ "'
 
 # Kubenertes kubectl configuration files
 KUBECONFIG=$HOME/.kube/config
 KUBECONFIG=$KUBECONFIG:$HOME/projects/ncs/git/mobility-ncs-core-tools/k8s-config/kubeconfig
 KUBECONFIG=$KUBECONFIG:$HOME/projects/ncs/git/mobility-ncs-core-tools/k8s-config-secret/mtdmz1/kubeconfig
+KUBECONFIG=$KUBECONFIG:$HOME/projects/ncs/git/mobility-ncs-core-tools/k8s-config-secret/azure/config
+KUBECONFIG=$KUBECONFIG:$HOME/projects/ncs/gkqa/gkqa-ns-admin/ci2t-test/gkqa-ns-admin-squad-ns-admins.kubeconfig
+KUBECONFIG=$KUBECONFIG:$HOME/projects/ncs/gkqa/gkqa-ns-admin/i2-a-test/gkqa-ns-admin-squad-ns-admins.kubeconfig
 export KUBECONFIG
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
@@ -187,4 +197,4 @@ export SDKMAN_DIR="/home/nbrouard/.sdkman"
 # uninstall by removing these lines or running `tabtab uninstall gitbook`
 [ -f /opt/node-v0.12.2-linux-x64/lib/node_modules/gitbook-completions/node_modules/tabtab/.completions/gitbook.bash ] && . /opt/node-v0.12.2-linux-x64/lib/node_modules/gitbook-completions/node_modules/tabtab/.completions/gitbook.bash
 
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
